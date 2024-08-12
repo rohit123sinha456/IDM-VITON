@@ -1,5 +1,16 @@
 #!/bin/bash
 
+
+# Step 0: Git LFS fetch all
+git lfs fetch --all
+if [ $? -ne 0 ]; then
+    echo "Git LFS fetch failed."
+    exit 1
+fi
+
+echo "Git LFS fetch successful."
+
+
 # Step 1: Check if conda is installed
 if ! command -v conda &> /dev/null; then
     echo "Conda not found, installing Miniconda..."
