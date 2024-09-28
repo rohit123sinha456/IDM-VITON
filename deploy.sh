@@ -23,9 +23,9 @@ else
     echo "Conda is already installed."
 fi
 
-# Step 2: Create a conda environment from environment.yml
-if [ -f "environment.yml" ]; then
-    conda env create -f environment.yml
+# Step 2: Create a conda environment from environment.yaml
+if [ -f "$PROJECTHOME/environment.yaml" ]; then
+    conda env create -f $PROJECTHOME/environment.yaml
     if [ $? -ne 0 ]; then
         echo "Failed to create conda environment."
         exit 1
@@ -38,7 +38,7 @@ fi
 
 # Step 3: Activate the conda environment and locate gunicorn
 source $(conda info --base)/etc/profile.d/conda.sh
-conda activate $(head -n 1 environment.yml | cut -d ' ' -f2)
+conda activate $(head -n 1 $PROJECTHOME/environment.yaml | cut -d ' ' -f2)
 if [ $? -ne 0 ]; then
     echo "Failed to activate conda environment."
     exit 1
@@ -63,7 +63,7 @@ fi
 echo "VITONGUNICORN exported to /etc/environment."
 
 # Step 5: Copy viton.service to /etc/systemd/system/
-sudo cp viton.service /etc/systemd/system/
+sudo cp $PROJECTHOME/viton.service /etc/systemd/system/
 if [ $? -ne 0 ]; then
     echo "Failed to copy viton.service to /etc/systemd/system/"
     exit 1
@@ -90,10 +90,10 @@ fi
 echo "viton.service enabled to start on boot."
 
 # Step 8: Start the viton service
-sudo systemctl start viton.service
-if [ $? -ne 0 ]; then
-    echo "Failed to start viton.service."
-    exit 1
-fi
+#sudo systemctl start viton.service
+#if [ $? -ne 0 ]; then
+#    echo "Failed to start viton.service."
+#    exit 1
+#fi
 
-echo "viton.service started successfully."
+#echo "viton.service started successfully."
