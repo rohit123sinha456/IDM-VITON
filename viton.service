@@ -6,7 +6,7 @@ Description=Gunicorn service
 EnvironmentFile=/etc/environment
 
 # Use the environment variables for gunicorn and the project directory
-ExecStart=$VITONGUNICORN -w 3 -b :5000 -t 0 --log-file $PROJECT_LOG --chdir $PROJECT_DIR wsgi:app
+ExecStart=/bin/bash -c "$VITONGUNICORN -w 3 -b :5000 -t 0 --log-file $PROJECT_LOG --chdir $PROJECT_DIR wsgi:app"
 
 Restart=always
 RestartSec=5
